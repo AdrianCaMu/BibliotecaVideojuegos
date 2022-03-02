@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import almacen.Biblioteca;
+import Biblioteca.Biblioteca;
 import models.Usuario;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -98,7 +98,7 @@ public class RegistroView {
 		btnRegister.addActionListener(new ActionListener() {
 			// OnClick
 			public void actionPerformed(ActionEvent e) {
-				registrar();
+				registrar(tfUsername.getText(), new String(pwdPassword.getPassword()), new String(pwdConfirmPassword.getPassword()));
 			}
 		});
 
@@ -113,16 +113,17 @@ public class RegistroView {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) { // Para que al pulsar la tecla enter, te deje acceder
-					registrar();
+					registrar(tfUsername.getText(), new String(pwdPassword.getPassword()), new String(pwdConfirmPassword.getPassword()));
 				}
 			}
 		});
 	}
 
-	private void registrar() {
-		String username = tfUsername.getText();
-		String password = new String(pwdPassword.getPassword());
-		String confirmarPassword = new String(pwdConfirmPassword.getPassword());
+	public boolean registrar(String user, String contrasenya, String contrasenya2) {
+		String username = user;
+		String password = contrasenya;
+		String confirmarPassword = contrasenya2;
+		
 		if (password.length() >= 8) {
 			if (password.equals(confirmarPassword)) {
 				if (!username.isEmpty() && !password.isEmpty() && !confirmarPassword.isEmpty()) {
@@ -134,6 +135,8 @@ public class RegistroView {
 						JOptionPane.showMessageDialog(btnRegister, "Usuario registrado correctamente");
 						new LoginView();
 						frame.dispose();
+						return true;
+						
 					} else {
 						JOptionPane.showMessageDialog(btnRegister, "nombre de usuario ya registrado, pruebe con otro");
 					}
@@ -146,6 +149,7 @@ public class RegistroView {
 		} else {
 			JOptionPane.showMessageDialog(lblRegistrar, "Las contraseñas tienen que tener mas de 8 caracteres");
 		}
+		return false;
 	}
 
 	private boolean comprobarNombreUsu(Usuario u) {

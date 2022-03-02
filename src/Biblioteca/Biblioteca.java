@@ -1,4 +1,4 @@
-package almacen;
+package Biblioteca;
 
 import java.util.ArrayList;
 
@@ -10,7 +10,5 @@ public class Biblioteca {
 	public static ArrayList<VideoJuegos> juegos = new ArrayList<VideoJuegos>();
 	
 	public static ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
-	
-	
 	
 }

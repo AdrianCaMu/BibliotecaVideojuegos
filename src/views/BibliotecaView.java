@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import almacen.Biblioteca;
+import Biblioteca.Biblioteca;
 import models.VideoJuegos;
 
 public class BibliotecaView {
@@ -150,20 +150,7 @@ public class BibliotecaView {
 		
 		btnBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int confirmar = JOptionPane.showConfirmDialog(btnBorrar,
-						"¿Estás seguro de que quieres borrar este registro?");
-				if (confirmar == 0) { // Quiere borrar
-					Biblioteca.juegos.remove(indice);
-					if(indice == 0) {
-						printDelante();
-					}
-					 if (Biblioteca.juegos.size() > 0) {
-						printAtras();
-					} else {
-						JOptionPane.showMessageDialog(btnBorrar, "Te has quedado sin videojuegos");
-						printVacio();
-					}
-				}
+				eliminar();
 			}
 		});
 		
@@ -182,7 +169,7 @@ public class BibliotecaView {
 		
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				updateJuego();
+				updateJuego(tfNombre.getText(), tfGenero.getText(), tfDesarolladores.getText(), Integer.parseInt(tfPegi.getText()), Integer.parseInt(tfHoras.getText()));
 				interruptorEditar();
 			}
 		});
@@ -213,7 +200,22 @@ public class BibliotecaView {
 		}
 	}
 	
-	
+	public void eliminar() {
+		int confirmar = JOptionPane.showConfirmDialog(btnBorrar,
+				"¿Estás seguro de que quieres borrar este registro?");
+		if (confirmar == 0) { // Quiere borrar
+			Biblioteca.juegos.remove(indice);
+			if(indice == 0) {
+				printDelante();
+			}
+			 if (Biblioteca.juegos.size() > 0) {
+				printAtras();
+			} else {
+				JOptionPane.showMessageDialog(btnBorrar, "Te has quedado sin videojuegos");
+				printVacio();
+			}
+		}
+	}
 
 	private void printVacio() {
 		tfNombre.setText("");
@@ -251,13 +253,13 @@ public class BibliotecaView {
 		printJuego();
 	}
 
-	private void updateJuego() {
+	public void updateJuego(String nombre, String genero, String Desarrolladora, int Pegi, int Hora) {
 		VideoJuegos a = Biblioteca.juegos.get(indice);
-		a.setNombre(tfNombre.getText());
-		a.setGenero(tfGenero.getText());
-		a.setDesarrolladora(tfDesarolladores.getText());
-		a.setPegi(Integer.parseInt(tfPegi.getText()));
-		a.setHoras(Integer.parseInt(tfHoras.getText()));
+		a.setNombre(nombre);
+		a.setGenero(genero);
+		a.setDesarrolladora(Desarrolladora);
+		a.setPegi(Pegi);
+		a.setHoras(Hora);
 	}
 
 

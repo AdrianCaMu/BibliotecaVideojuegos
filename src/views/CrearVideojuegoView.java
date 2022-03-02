@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import almacen.Biblioteca;
+import Biblioteca.Biblioteca;
 import models.VideoJuegos;
 
 public class CrearVideojuegoView {
@@ -94,7 +94,7 @@ public class CrearVideojuegoView {
 	private void configureListeners() {
 		btnCrear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				insertarJuego();
+				insertarJuego(tfNombre.getText(), Integer.parseInt(tfPegi.getText()), textGenero.getText(), textDesarrolladora.getText(), Integer.parseInt(txtHoras.getText()));
 			}
 		});
 		btnSalir.addActionListener(new ActionListener() {
@@ -105,34 +105,30 @@ public class CrearVideojuegoView {
 		});
 	}
 
-	private void insertarJuego() {
+	public boolean insertarJuego(String name, int numpegi, String genero, String desarrolladora, int numhoras) {
 		boolean repetido = false;
 		if (tfPegi.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(btnCrear, "Revisa todos los campos");
 		} else {
 			for (VideoJuegos juegos: Biblioteca.juegos) {
-				if (juegos.getNombre().equalsIgnoreCase(tfNombre.getText())) {
+				if (juegos.getNombre().equalsIgnoreCase(name)) {
 					repetido = true;
 				}
 			}
 			if (repetido == false) {
-				String nombre = tfNombre.getText();
-				int pegi = Integer.parseInt(tfPegi.getText());
-				String genero = textGenero.getText();
-				String desa = textDesarrolladora.getText();
-				int horas = Integer.parseInt(txtHoras.getText());
 
-				
-				VideoJuegos p = new VideoJuegos(nombre, pegi, genero, desa, horas);
+				VideoJuegos p = new VideoJuegos(name, numpegi, genero, desarrolladora, numhoras);
 				Biblioteca.juegos.add(p);
 
 				JOptionPane.showMessageDialog(btnCrear, "Videojuego añadido");
 				new BibliotecaView();
 				frame.dispose();
+				return true;
 			} else {
 				JOptionPane.showMessageDialog(btnCrear, "Videojuego ya registrado");
 			}
-
 		}
+		
+		return false;
 	}
 }

@@ -1,6 +1,6 @@
 package mainapp;
 
-import almacen.Biblioteca;
+import Biblioteca.Biblioteca;
 import models.Usuario;
 import models.VideoJuegos;
 import views.LoginView;

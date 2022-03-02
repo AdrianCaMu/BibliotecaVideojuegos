@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.JTextField;
 
-import almacen.Biblioteca;
+import Biblioteca.Biblioteca;
 import models.Usuario;
 
 import javax.swing.JPasswordField;
@@ -93,7 +93,7 @@ public class LoginView {
 	public void configureListeners() {
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				comprobarLogin();
+				comprobarLogin(txtUsuario.getText(), new String(pfPassword.getPassword()));
 			}
 		});
 
@@ -114,16 +114,16 @@ public class LoginView {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) { // Para que al pulsar la tecla enter, te deje acceder
-					comprobarLogin();
+					comprobarLogin(txtUsuario.getText(), new String(pfPassword.getPassword()));
 				}
 			}
 		});
 
 	}
 
-	private void comprobarLogin() {
-		String username = txtUsuario.getText();
-		String password = new String(pfPassword.getPassword());
+	public boolean comprobarLogin(String user, String contrasenya) {
+		String username = user;
+		String password = contrasenya;
 		boolean encontrado = false;
 
 		for (Usuario usu : Biblioteca.usuarios) { // Recorre el array list usuarios
@@ -139,10 +139,12 @@ public class LoginView {
 		if (encontrado == true) {
 			new BibliotecaView();
 			frame.dispose();
+			return true;
 
 		} else {
 			JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta vuelve a probar");
 		}
+		return false;
 
 	}
 }
